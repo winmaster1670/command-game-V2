@@ -94,6 +94,7 @@ def game_loop():
     playable = True
     effects = {}
     drunk_applied = False
+    backpack_applied = False
     
     forrest1_enemys = ("slime", "goblin", "rabbit")
     smalltown_enemys = ("bandit", "drunkman", "thief")
@@ -557,7 +558,7 @@ def game_loop():
                             if what == "pickpocket":
                                 skills += ["pickpocket"]
                                 print(
-                                    "you have unlocked pickpocket skill you can use it to pickpocket you enemy use it by typing 'skill pickpocket'"
+                                    "you have unlocked pickpocket skill you can use it to pickpocket you enemy use it by typing [yellow](skill pickpocket)[/yellow]"
                                 )
                                 print(f"you're current unlocked skills are {skills}")
 
@@ -571,7 +572,7 @@ def game_loop():
                             print("you already have that skill")
                     else:
                         print(
-                            "spend points on what, you can see the avalable upgrades by typing 'points help'"
+                            "spend points on what, you can see the avalable upgrades by typing [yellow](pointshelp)[/yellow]"
                         )
                 else:
                     print("you dont have any points")
@@ -677,7 +678,7 @@ def game_loop():
                                     gold -= h_cost
                                     if ["house"] not in unlocked_areas:
                                         unlocked_areas += ["house"]
-                                        print(f"you have bought a house you have unlocked the 'house' area you can go to it by typing [yellow]'goto (house)'[/yellow]")
+                                        print(f"you have bought a house you have unlocked the 'house' area you can go to it by typing [yellow](goto house)[/yellow]")
                                         print("while in you house you can use the [yellow]'deposit'[/yellow] and [yellow]'retrive'[/yellow] commands to store and save gold and items on death")
                                 else:
                                     print("you already own that")
@@ -697,6 +698,8 @@ def game_loop():
                 print(f"the following item are for sale: sword, axe, backpack")
             elif current_room == "carpenter":
                 print("the carpenter can build you a house in the forrest and upgrades for the house")
+            else:
+                print("you must be in a shop to use this command")
             
             
         elif action == "drop":
@@ -813,7 +816,7 @@ def game_loop():
 
 
         elif action == "stats":
-            print("you're stats are as follows:")
+            print("[blue]you're stats are as follows:[/blue]")
             print(
                 f"\n [green]current room:[/green] {current_room},"
                 f"\n [green]health:[/green] {health},"
@@ -951,7 +954,7 @@ def game_loop():
                 current_room = "house"
             else:
                 current_room = "forrest"
-            print("you have [red]died[/red] you lose you gold and inventory")
+            print("you have [red]died[/red] you lost you gold and inventory")
             attacked = False
             health = max_health
 
@@ -980,11 +983,11 @@ def game_loop():
                 if hit <= e_accuracy:
                     health -= e_damage
                     print(
-                        f"the {caught_by} hit you for {e_damage} you have {health} health remaining"
+                        f"[red]the {caught_by} hit you[/red] for {e_damage} you have {health} health remaining"
                     )
                     attack_turn = "player"
                 else:
-                    print(f"the {caught_by} tried to hit you but missed")
+                    print(f"[blue]the {caught_by} tried to hit you but missed[/blue]")
                     attack_turn = "player"
 
         if xp >= xp_to_next:
@@ -1024,7 +1027,14 @@ def game_loop():
 
     #charm effects===========================================
         if "backpack" in charms:
-            max_inventory 
+            if backpack_applied == False:
+                max_inventory + 10
+                backpack_applied = True
+            else:
+                pass
+        else:
+            max_inventory - 10
+            backpack_applied = False
             
 
             
