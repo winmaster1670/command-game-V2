@@ -17,7 +17,7 @@ def check_item_stats(looking, stat):
         if stat == "equip":
             return False
         if stat == "desc":
-            return "this is an apple, you can eat it, just make sure to check for worms"
+            return " this is an apple, you can eat it, just make sure to check for worms \n it heals you for 3 health"
             
     if looking == "bread":
         if stat == "health":
@@ -35,7 +35,7 @@ def check_item_stats(looking, stat):
         if stat == "equip":
             return False
         if stat == "desc":
-            return "its a piece of bread, you can eat it, not much to say its bread"
+            return " its a piece of bread, you can eat it, not much to say its bread \n it heals you for 4 health"
             
     if looking == "ale":
         if stat == "health":
@@ -51,7 +51,7 @@ def check_item_stats(looking, stat):
         if stat == "equip":
             return False
         if stat == "desc":
-            return "its ale you can drink it, side effects include: confedence, dancing skills and getting kicked out of places"
+            return " its ale you can drink it, side effects include: confedence, dancing skills and getting kicked out of places \n it applies the 'drunk' effect increacing damage but lowering accuracy"
             
             
     #WEAPONS====================
@@ -69,13 +69,13 @@ def check_item_stats(looking, stat):
         if stat == "equip":
             return "weapon"
         if stat == "desc":
-            return "this is a sword, its better then punching stuff"
+            return " this is a sword, its better then punching stuff \n its accuracy is 7 and its damage is 4"
             
     if looking == "axe":
         if stat == "damage":
             return  6
         if stat == "accuracy":
-            return 4
+            return 5
         if stat == "cost":
             return 19
         if stat == "food":
@@ -85,7 +85,7 @@ def check_item_stats(looking, stat):
         if stat == "equip":
             return "weapon"
         if stat == "desc":
-            return "this is an axe, the weapon of a barbarian, or you maybe"
+            return " this is an axe, the weapon of a barbarian, or you maybe \n its accuracy is 5 and its damage is  6"
             
     if looking == "dagger":
         if stat == "damage":
@@ -101,7 +101,7 @@ def check_item_stats(looking, stat):
         if stat == "equip":
             return "weapon"
         if stat == "desc":
-            return "this is a dagger, allan please add details"
+            return " this is a dagger, allan please add details \n its accuracy is 8 and its damage is 3"
             
     if looking == "fist":
         if stat == "damage":
@@ -115,7 +115,7 @@ def check_item_stats(looking, stat):
         if stat == "equip":
             return "weapon"
         if stat == "desc":
-            return "this is your fist, please dont eat it"
+            return "this is your fist, please dont eat it \n its accuracy is 6 and its damage is 3"
             
     
     #CRAFTING==============
@@ -129,7 +129,7 @@ def check_item_stats(looking, stat):
         if stat == "equip":
             return False
         if stat == "desc":
-            return "this is slime, its slimy and sticky who wouldve guessed"
+            return "this is slime, its slimy and sticky who wouldve guessed \n it is an adhesive use in crafting"
 
     
     
