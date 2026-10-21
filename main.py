@@ -18,7 +18,9 @@ from house_upgrades import check_house_upgrade
 # knowalge tree , resipy unlocks , knowlage stat , blueprint finding /buying 
 # add afexes from apotheosis and afex dust from grinding down afex items to put afexes of other items
 # make it so you can sell stuff to the shop
-#make it so you can find crafting matrerials while exploring like wood the the forrest (soon) <============================
+# make it so you can find crafting matrerials while exploring like wood the the forrest (soon) <============================
+# instead of having a defferent item for each combo of woon and metal and adhesive types make different tiers of each crafting material eg:slime is a tier 1 adhisive 
+# metal tier will affect aromor / damage stat adhisive teir will affect durability and wood wont be used of armor and will affect accuracy
 
 
 
@@ -947,9 +949,6 @@ def game_loop():
 
 
         if health <= 0:
-            gold = 0
-            inventory.clear()
-            inventory["fist"] = 1
             if house_level >= 1:
                 current_room = "house"
             else:
@@ -957,6 +956,10 @@ def game_loop():
             print("you have [red]died[/red] you lost you gold and inventory")
             attacked = False
             health = max_health
+            inventory_used = 0
+            gold = 0
+            inventory.clear()
+            weapon = "fist"
 
         if attacked == True:
             if e_health <= 0:

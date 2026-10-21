@@ -129,7 +129,7 @@ def check_item_stats(looking, stat):
         if stat == "equip":
             return False
         if stat == "desc":
-            return "this is slime, its slimy and sticky who wouldve guessed \n it is an adhesive use in crafting"
+            return "this is slime, its slimy and sticky who wouldve guessed \n it is a teir 1 adhesive use in crafting"
 
     
     
@@ -147,7 +147,7 @@ def check_item_stats(looking, stat):
         if stat == "charm effect":
             return list("disguise bandit", "add", 2)
         if stat == "desc":
-            return "this is a bandana, its seen many bank robberies but it'll never talk"
+            return " this is a bandana, its seen many bank robberies but it'll never talk \n it is a charm that will give disguise you as a bandit [red]THIS DOES NOTHING YET[/red]"
             
     if looking == "rabbits_foot":
         if stat == "cost":
@@ -161,22 +161,11 @@ def check_item_stats(looking, stat):
         if stat == "charm effect":
             return list("luck", "add", 3)
         if stat == "desc":
-            return "its a rabbits foot, ITS SO FLUFFY"
+            return " its a rabbits foot, ITS SO FLUFFY \n it is used as a speacial item in crafting"
         
     
     
     #OTHER==============
-    if looking == "shop_key":
-        if stat == "cost":
-            return None
-        if stat == "food":
-            return False
-        if stat == "crafting":
-            return False
-        if stat == "equip":
-            return False
-        if stat == "desc":
-            return "its the key to the shop, which shop? the shop"
 
     if looking == "backpack":
         if stat == "cost":
@@ -190,4 +179,4 @@ def check_item_stats(looking, stat):
         if stat == "charm effect":
             return "max inventory +10"
         if stat == "desc":
-            return "its a backpack, who knows whats in it? actually you do"
+            return " its a backpack, who knows whats in it? actually you do \n its a charm that will increace you max inventory by 10"
