@@ -75,7 +75,7 @@ def game_loop():
     house_storage_max = 0
     house_upgrades1 = ["house"]
     house_upgrades2 = ["porch", "floor_boards"]
-    house_upgrades3 = ["second floor", "stone walls"]
+    house_upgrades3 = ["second_floor", "stone_walls"]
     house_upgrades_unlocked = ["house"]
     
     #inventory and charm stats
@@ -184,7 +184,6 @@ def game_loop():
                     " the item grinder or grinder for short is a way to turn [blue]items into crafting materials[/blue] and [blue]afex items into afex dust[/blue]"
                     "\n when grinding down items you will get [blue]1/3 of the materials[/blue] used to craft it"
                     "\n when grinding down afex items you will get [blue]none of the materials[/blue] use to craft it but you will get afex dust used to apply afexes to weapons and armor [yellow](type help afex-anvil for more info)[/yellow]"
-                    "\n add the rest os stuff here" #<====================
                     "\n [red]NOT IN THE GAME YET[/red]"
                 )
 
