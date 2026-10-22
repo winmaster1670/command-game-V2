@@ -66,6 +66,7 @@ def game_loop():
     current_room = "forrest"
     unlocked_areas = ["forrest"]
     unexplorable_areas = ["shop", "carpenter", "blacksmith", "house"]
+    shops_found = False
     
     
     house_level = 0
@@ -94,14 +95,14 @@ def game_loop():
     #other stats
     attack_turn = "player"
     times_explored_forrest = 0
-    times_explored_smalltown = 0
+    times_explored_small_town = 0
     playable = True
     effects = {}
     drunk_applied = False
     backpack_applied = False
     
     forrest1_enemys = ("slime", "goblin", "rabbit")
-    smalltown_enemys = ("bandit", "drunkman", "thief")
+    small_town_enemys = ("bandit", "drunkman", "thief")
     
     temp_count = 0
     temp_count2 = 0
@@ -271,8 +272,8 @@ def game_loop():
                             if current_room == "forrest":
                                 caught_by = random.choice(forrest1_enemys)
 
-                            elif current_room == "smalltown":
-                                caught_by = random.choice(smalltown_enemys)
+                            elif current_room == "small_town" or current_room == "town_center":
+                                caught_by = random.choice(small_town_enemys)
 
                             e_health = check_enemy_stats(f"{caught_by}", "health")
                             e_damage = check_enemy_stats(f"{caught_by}", "damage")
@@ -296,8 +297,8 @@ def game_loop():
                                     inventory_used += 1
                                     print(f"[magenta]you found an apple,[/magenta] you now have these item in your inventory {inventory}")
 
-                            if current_room == "smalltown":
-                                times_explored_smalltown += 1
+                            if current_room == "small_town" or current_room == "town_center":
+                                times_explored_small_town += 1
                                 gold_found = random.randint(2, 5)
                                 item_found = random.randint(1, 5)
                                 if item_found == 5:
@@ -314,21 +315,35 @@ def game_loop():
 
                             if times_explored_forrest >= 10:
                                 if attacked == False:
-                                    if "smalltown" not in unlocked_areas:
-                                        unlocked_areas += ["smalltown"]
-                                        print("[magenta]while exploring you find a small town![/magenta]")
-                                        print("you can go to the small town by typing [yellow]'goto smalltown'[/yellow]")
+                                    if "small_town" not in unlocked_areas:
+                                        unlocked_areas += ["small_town"]
+                                        print("[magenta]while exploring you find a small_town![/magenta]")
+                                        print("you can go to the small town by typing [yellow]'goto small_town'[/yellow]")
                                         print(f"you can now travel you these areas: {unlocked_areas}")
 
-                            if times_explored_smalltown >= 5:
+                            if times_explored_small_town >= 5:
                                 if attacked == False:
-                                    if "shop" not in unlocked_areas:
-                                        unlocked_areas += ["shop"]
-                                    if "carpenter" not in unlocked_areas:
-                                        unlocked_areas += ["carpenter"]
-                                        print("[magenta]you find the town center while exploring the town![/magenta]")
-                                        print("you can go to the shop and carpenter by typing [yellow]'goto (place)'[/yellow]")
+                                    if "town_center" not in unlocked_areas:
+                                        unlocked_areas += ["town_center"]
+
+                                        print("[magenta]you find the town_center while exploring the town![/magenta]")
+                                        print("you can go to the town_center by typing [yellow](goto town_center)[/yellow]")
                                         print(f"you can now travel to these areas {unlocked_areas}")
+                            
+                            if current_room == "town_center":
+                                if shops_found == False:
+                                    if attacked == False:
+                                        if "shop" not in unlocked_areas:
+                                            unlocked_areas += ["shop"]
+                                        if "carpenter" not in unlocked_areas:
+                                            unlocked_areas += ["carpenter"]
+                                        if "blacksmith" not in unlocked_areas:
+                                            unlocked_areas += ["blacksmith"]
+
+                                        print("[magenta] while exploring the town center you find the shopping district[/magenta]")
+                                        print("you can now travel to the shop, carpenter and blacksmith")
+                                        print(f"you can now travel to these areas: {unlocked_areas}")
+                                        shops_found = True
                 else:
                     print("you can not explore while under attack")
                     
@@ -848,7 +863,7 @@ def game_loop():
                 f"\n [green]unlocked_areas:[/green] {unlocked_areas},"
                 f"\n [green]attack_turn:[/green] {attack_turn},"
                 f"\n [green]times_explored_forrest:[/green] {times_explored_forrest},"
-                f"\n [green]times_explored_smalltown:[/green] {times_explored_smalltown},"
+                f"\n [green]times_explored_small_town:[/green] {times_explored_small_town},"
                 f"\n [green]xp:[/green] {xp},"
                 f"\n [green]xp_to_next:[/green] {xp_to_next},"
                 f"\n [green]level:[/green] {level},"
@@ -878,10 +893,10 @@ def game_loop():
                     points = 10000
                     print(f"DEBUG: you now have {points} points")
                 elif what == "areas":
-                    if ["smalltown"] in unlocked_areas:
+                    if ["small_town"] in unlocked_areas:
                         pass
                     else:
-                        unlocked_areas += ["smalltown"]
+                        unlocked_areas += ["small_town"]
                     if ["shop"] in unlocked_areas:
                         pass
                     else:
@@ -926,8 +941,8 @@ def game_loop():
                         print(f"youve been attacked by a {caught_by}")
                         attacked = True
 
-                    elif current_room == "smalltown":
-                        caught_by = random.choice(smalltown_enemys)
+                    elif current_room == "small_town":
+                        caught_by = random.choice(small_town_enemys)
                         e_health = check_enemy_stats(f"{caught_by}", "health")
                         e_damage = check_enemy_stats(f"{caught_by}", "damage")
                         e_xp = check_enemy_stats(f"{caught_by}", "xp")
