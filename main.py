@@ -6,10 +6,9 @@ from house_upgrades import check_house_upgrade
 
 
 # IDEAS
-# add a carpenter to build you a house you can store items and gold that will be saved on death (storage done finish ugrade stats)
 # dungoen (later)
 # add factions / clans that you can join or agitate 
-# a pluge has struck the lands summoned by an evil entetiy, kill him(?)
+# a pluge has struck the lands summoned by an evil entetiy, kill him  (maybe?)
 # add town center with a notice board for quests from various nps's with quest difficulties so you dont get quest that are too hard
 # every 5 turn have a chance to add a quest to the quest board
 # add crafting matierals, can be bought from shops 
@@ -48,6 +47,7 @@ def game_loop():
     
     gold = 10
     attacked = False
+    explorable = True
     
     xp = 0
     xp_to_next = 10
@@ -65,6 +65,8 @@ def game_loop():
     #room stats
     current_room = "forrest"
     unlocked_areas = ["forrest"]
+    unexplorable_areas = ["shop", "carpenter", "blacksmith", "house"]
+    
     
     house_level = 0
     house_material = None
@@ -75,7 +77,7 @@ def game_loop():
     house_storage_max = 0
     house_upgrades1 = ["house"]
     house_upgrades2 = ["porch", "floor_boards"]
-    house_upgrades3 = ["second_floor", "stone_walls"]
+    house_upgrades3 = ["second_floor"]
     house_upgrades_unlocked = ["house"]
     
     #inventory and charm stats
@@ -154,10 +156,11 @@ def game_loop():
                 
             elif what == "explore" or what == "exploring":
                 print(
-                    "you can explore many areas in the game the first of which is the one you spawn in."
+                    " you can explore many areas in the game the first of which is the forrest the one you spawn in."
                     "\n while exploring you my find gold but bewhere you may be [red]attacked by enemies![/red]"
                     "\n the enemies you can be attacked by [blue]differ depending on the area[/blue]."
                     "\n sometimes once you explore one area enough you may [blue]find new areas to explore[/blue]"
+                    "\n there are some ares you [blye]can not explore[/blue] however these include the shop the carpenter the blacksmith and your house"
                 )
 
             elif what == "afex" or what == "afexes":
@@ -165,7 +168,7 @@ def game_loop():
                     " afex are [blue]random modifiers[/blue] that can be applied on weapons and armor, there are 4 teirs of afexs from most common to rarest they are: [grey]common[/grey] [green]uncommon[/green] [pruple]rare[/purple] [red]mythical[/red]"
                     "\n the most common way to get afex items is [blue]random enemy drops[/blue] but you can also [blue]apply afexes to existing item at the afex-anvil[/blue] [yellow](type help anvil for more info)[/yellow]"
                     "\n this needs [blue]afex dust[/blue] from the item grinder [yellow](type help grinder for more info)[/yellow]"
-                    "\n [yellow](type help afex-list for a list of all avalable afexes)"
+                    "\n [yellow](type help afex-list for a list of all avalable afexes)[/yellow]"
                     "\n [red]THESE ARE NOT IN THE GAME YET[/red]"
                 )
 
@@ -176,6 +179,7 @@ def game_loop():
                     "\n to craft things on the anvil you will need [blue]crafting resorces[/blue] these can be aquired in a few ways the most consistant is to [blue]buy them from stores[/blue] in the town or [blue]grinding down items[/blue] at the item grinder [yellow](type help grinder for more info)[/yellow] but you can also find them [blue]randomly when exploring some areas[/blue] [yellow](type help exploring for more info)[/yellow]"
                     "\n to apply afexes of the afex anvil you will need [blue]afex dust[/blue] you can get this by grinding down afex items at the [blue]item grinder[/blue] [yellow](type help grinder for more info)[/yellow]"
                     "\n you will need the [blue]correct teir[/blue] of afex dust to apply that tier of afex and some afexes will take [blue]multiple afex dusts[/blue]"
+                    "\n unlike many other house upgardes the anvil and afex-anvil are not bought from the carpenter you will have to buy the anvil and unfinished-afex-anvil from the blacksmith you will have to enchant the unfinished-afex-anvil with 5 [grey]common afex-dust[/grey] 3 [green]uncommon afex-dust[/green] and 1 [purple]rare afex-dust[/purple]"
                     "\n [red]NOT IN THE GAME YET[/red]"
                 )
 
@@ -184,7 +188,16 @@ def game_loop():
                     " the item grinder or grinder for short is a way to turn [blue]items into crafting materials[/blue] and [blue]afex items into afex dust[/blue]"
                     "\n when grinding down items you will get [blue]1/3 of the materials[/blue] used to craft it"
                     "\n when grinding down afex items you will get [blue]none of the materials[/blue] use to craft it but you will get afex dust used to apply afexes to weapons and armor [yellow](type help afex-anvil for more info)[/yellow]"
+                    "\n unlike many other house upgardes the grinder is not bought at the carpenter you will have to make it yourself at the anvil [yellow](type help anvil for more info)[/yellow]"
                     "\n [red]NOT IN THE GAME YET[/red]"
+                )
+            
+            elif what == "forge":
+                print(
+                    " the forge is a crafting staton in the basment of you house once you unlock it but if you dont have it unlokced you can goto the blacksmith in town to forge thing for at [italic]competative[/italic] prices"
+                    "\n it is used to turn ores into bars and bars into heated bars which are used on the anvil to craft weapons and armor [yellow](type help anvil for more info)[/yellow]"
+                    "\n unlike many other house upgardes the forge in not bought at the carpenter you will have to buy it at the blacksmith"
+                    "\n [red]THIS IS NOT IN THE GAME YET[/red]"
                 )
 
             elif what == "commands":
@@ -243,7 +256,7 @@ def game_loop():
         elif action == "explore":
             if playable == True:
                 if attacked == False:
-                    if current_room == "shop" or current_room == "carpenter":
+                    if explorable == True:
                         print("you can not explore here")
                     else:
 
@@ -670,23 +683,27 @@ def game_loop():
                     elif current_room == "carpenter":
                         what = command[1]
                         h_cost = check_house_upgrade(f"{what}", "cost")
-                        if what in house_upgrades_unlocked:
-                            if gold >= h_cost:
-                                if what not in house_upgrades_owned:
-                                    house_upgrades_owned += [f"{what}"]
-                                    to_remove = house_upgrades_unlocked.index(what)
-                                    house_upgrades_unlocked.pop(to_remove)
-                                    gold -= h_cost
-                                    if ["house"] not in unlocked_areas:
-                                        unlocked_areas += ["house"]
-                                        print(f"you have bought a house you have unlocked the 'house' area you can go to it by typing [yellow](goto house)[/yellow]")
-                                        print("while in you house you can use the [yellow]'deposit'[/yellow] and [yellow]'retrive'[/yellow] commands to store and save gold and items on death")
+                        h_where = check_house_upgrade(f"{ehat}", where)
+                        if h_where == "capenter":
+                            if what in house_upgrades_unlocked:
+                                if gold >= h_cost:
+                                    if what not in house_upgrades_owned:
+                                        house_upgrades_owned += [f"{what}"]
+                                        to_remove = house_upgrades_unlocked.index(what)
+                                        house_upgrades_unlocked.pop(to_remove)
+                                        gold -= h_cost
+                                        if ["house"] not in unlocked_areas:
+                                            unlocked_areas += ["house"]
+                                            print(f"you have bought a house you have unlocked the 'house' area you can go to it by typing [yellow](goto house)[/yellow]")
+                                            print("while in you house you can use the [yellow]'deposit'[/yellow] and [yellow]'retrive'[/yellow] commands to store and save gold and items on death")
+                                    else:
+                                        print("you already own that")
                                 else:
-                                    print("you already own that")
+                                    print("you can not afford that")
                             else:
-                                print("you can not afford that")
+                                print(f"you do not have that unlocked, you can buy these upgrades: {house_upgrades_unlocked}")
                         else:
-                            print(f"you do not have that unlocked, you can buy these upgrades: {house_upgrades_unlocked}")
+                            print("you can not buy that upgrade in the carpenter")
                     else:
                         print("you must be in the shop or carpenter it buy stuff")
                 else:
@@ -1024,6 +1041,11 @@ def game_loop():
                 drunk_applied = True
         else:
             drunk_applied = False
+
+        if current_room in unexplorable_rooms:
+            explorable = False
+        else:
+            explorable = True
 
 
 

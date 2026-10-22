@@ -129,7 +129,19 @@ def check_item_stats(looking, stat):
         if stat == "equip":
             return False
         if stat == "desc":
-            return "this is slime, its slimy and sticky who wouldve guessed \n it is a teir 1 adhesive use in crafting"
+            return "this is slime, its slimy and sticky who wouldve guessed \n it is used as a teir 1 adhesive in crafting [yellow](type help crafting for more info)[/yellow]"
+
+    if looking == "copper_ore":
+        if stat == "cost":
+            return 15
+        if stat == "food":
+            return False
+        if stat == "crafting":
+            return True
+        if stat == "equip":
+            return False
+        if stat == "desc":
+            return "its a piece of copper dont worry your not under a vest \n it must be into copper bar at a forge [yellow](type help forge for more info)[/yellow]"
 
     
     
