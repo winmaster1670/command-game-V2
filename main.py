@@ -3,6 +3,7 @@ from rich import print
 from enemy_stats import check_enemy_stats
 from item_stats import check_item_stats
 from house_upgrades import check_house_upgrade
+from events import check_event_stats
 
 
 # IDEAS
@@ -22,6 +23,11 @@ from house_upgrades import check_house_upgrade
 # metal tier will affect aromor / damage stat adhisive teir will affect durability and wood wont be used of armor and will affect accuracy
 
 
+
+
+#=========================================================================
+#============ REMEMBER pyinstaller -onefile --clean script.py ============
+#=========================================================================
 
 
 def show_instructions():
@@ -101,8 +107,10 @@ def game_loop():
     drunk_applied = False
     backpack_applied = False
     
-    forrest1_enemys = ("slime", "goblin", "rabbit")
-    small_town_enemys = ("bandit", "drunkman", "thief")
+    forrest_enemies = ("slime", "goblin", "rabbit")
+    small_town_enemies = ("bandit", "drunkman", "thief")
+
+    forrst_events = ("bow_string", "apple", "boar")
     
     temp_count = 0
     temp_count2 = 0
@@ -257,23 +265,27 @@ def game_loop():
         elif action == "explore":
             if playable == True:
                 if attacked == False:
-                    if explorable == True:
+                    if explorable == False:
                         print("you can not explore here")
                     else:
 
-                        caught = random.randint(1, 3)
                         if pickpocket_cooldown <= 0:
                             pickpocket_cooldown -= 1
                         if rage_timer <= 0:
                             rage_cooldown -= 1
+
+                        event_chance = random.randint (1, 2) #2 = event, 1 = no event
+                        if event_chance == 2:
+                            caught = random.randint(1, 2) #1 = attacked, 2 not attacked
+                        
                         if caught == 1:
                             attack_turn = "player"
 
                             if current_room == "forrest":
-                                caught_by = random.choice(forrest1_enemys)
+                                caught_by = random.choice()
 
                             elif current_room == "small_town" or current_room == "town_center":
-                                caught_by = random.choice(small_town_enemys)
+                                caught_by = random.choice(small_town_enemies)
 
                             e_health = check_enemy_stats(f"{caught_by}", "health")
                             e_damage = check_enemy_stats(f"{caught_by}", "damage")
@@ -284,32 +296,36 @@ def game_loop():
                             print(f"[red]youve been attacked[/red] by a {caught_by}")
                             attacked = True
 
-                        else:
+
+                        elif caught == 2:
+                            if current_room == "forrest":
+                                event = random.choice(forrst_events)
+                            if current_room == "small_town":
+                            #    event = random.choice(small_town_events) these dont exist yet
+                                event = random.choice(forrest_events)
+
+                            ev_item = check_event_stats(f"{event}", "item")
+                            ev_desc = check_event_stats(f"{event}", "desc")
+
+                            if e_item == None:
+                                pass
+                            else:
+                                if e_item in inventory:
+                                    inventory[f"{ev_item}"] += 1
+                                else:
+                                    inventory[f"{ev_item}"] = 1
+                            
+                            print(f"{ev_desc}")
+
+                        elif event_chance == 1:
                             if current_room == "forrest":
                                 times_explored_forrest += 1
                                 gold_found = random.randint(1, 4)
-                                item_found = random.randint(1, 5)
-                                if item_found == 5:
-                                    if "apple" in inventory:
-                                        inventory["apple"] += 1
-                                    else:
-                                        inventory["apple"] = 1
-                                    inventory_used += 1
-                                    print(f"[magenta]you found an apple,[/magenta] you now have these item in your inventory {inventory}")
-
+                                
                             if current_room == "small_town" or current_room == "town_center":
                                 times_explored_small_town += 1
                                 gold_found = random.randint(2, 5)
-                                item_found = random.randint(1, 5)
-                                if item_found == 5:
- 
-                                    if "bread" in inventory:
-                                        inventory["bread"] += 1
-                                    else:
-                                        inventory["bread"] = 1
-                                    inventory_used += 1
-                                    print(f"[magenta]you found some bread,[/magenta] you now have these items in your inventory {inventory}")
-
+                                
                             gold += gold_found
                             print(f"you found {gold_found} gold, you now have {gold} gold")
 
@@ -931,7 +947,7 @@ def game_loop():
                     print(f"DEBUG: you have entered combat")
                     attack_turn = "player"
                     if current_room == "forrest":
-                        caught_by = random.choice(forrest1_enemys)
+                        caught_by = random.choice(forrest_enemies)
                         e_health = check_enemy_stats(f"{caught_by}", "health")
                         e_damage = check_enemy_stats(f"{caught_by}", "damage")
                         e_xp = check_enemy_stats(f"{caught_by}", "xp")
@@ -942,7 +958,7 @@ def game_loop():
                         attacked = True
 
                     elif current_room == "small_town":
-                        caught_by = random.choice(small_town_enemys)
+                        caught_by = random.choice(small_town_enemies)
                         e_health = check_enemy_stats(f"{caught_by}", "health")
                         e_damage = check_enemy_stats(f"{caught_by}", "damage")
                         e_xp = check_enemy_stats(f"{caught_by}", "xp")
