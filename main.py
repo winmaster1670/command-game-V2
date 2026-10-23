@@ -26,7 +26,7 @@ from events import check_event_stats
 
 
 #=========================================================================
-#============ REMEMBER pyinstaller -onefile --clean script.py ============
+#============ REMEMBER pyinstaller --onefile --clean script.py ============
 #=========================================================================
 
 
@@ -110,7 +110,7 @@ def game_loop():
     forrest_enemies = ("slime", "goblin", "rabbit")
     small_town_enemies = ("bandit", "drunkman", "thief")
 
-    forrst_events = ("bow_string", "apple", "boar")
+    forrest_events = ("bow_string", "apple", "boar")
     
     temp_count = 0
     temp_count2 = 0
@@ -299,7 +299,7 @@ def game_loop():
 
                         elif caught == 2:
                             if current_room == "forrest":
-                                event = random.choice(forrst_events)
+                                event = random.choice(forrest_events)
                             if current_room == "small_town":
                             #    event = random.choice(small_town_events) these dont exist yet
                                 event = random.choice(forrest_events)
@@ -307,10 +307,10 @@ def game_loop():
                             ev_item = check_event_stats(f"{event}", "item")
                             ev_desc = check_event_stats(f"{event}", "desc")
 
-                            if e_item == None:
+                            if ev_item == None:
                                 pass
                             else:
-                                if e_item in inventory:
+                                if ev_item in inventory:
                                     inventory[f"{ev_item}"] += 1
                                 else:
                                     inventory[f"{ev_item}"] = 1
@@ -714,7 +714,7 @@ def game_loop():
                     elif current_room == "carpenter":
                         what = command[1]
                         h_cost = check_house_upgrade(f"{what}", "cost")
-                        h_where = check_house_upgrade(f"{ehat}", where)
+                        h_where = check_house_upgrade(f"{what}", "where")
                         if h_where == "capenter":
                             if what in house_upgrades_unlocked:
                                 if gold >= h_cost:
@@ -1073,7 +1073,7 @@ def game_loop():
         else:
             drunk_applied = False
 
-        if current_room in unexplorable_rooms:
+        if current_room in unexplorable_areas:
             explorable = False
         else:
             explorable = True
