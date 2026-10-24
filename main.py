@@ -10,23 +10,41 @@ from events import check_event_stats
 # dungoen (later)
 # add factions / clans that you can join or agitate 
 # a pluge has struck the lands summoned by an evil entetiy, kill him  (maybe?)
-# add town center with a notice board for quests from various nps's with quest difficulties so you dont get quest that are too hard
-# every 5 turn have a chance to add a quest to the quest board
+
+
+
+
+#CRAFTING ======================
+
 # add crafting matierals, can be bought from shops 
+# make it so you can find crafting matrerials while exploring like wood the the forrest (soon) <============================
+# instead of having a defferent item for each combo of woon and metal and adhesive types make different tiers of each crafting material eg:slime is a tier 1 adhisive  (i dont know how im gonna do this tier thing python dictonaries only allow 1 variable per key)
+# metal tier will affect aromor / damage stat adhisive teir will affect durability and wood wont be used of armor and will affect accuracy                             (i dont know how im gonna do this tier thing python dictonaries only allow 1 variable per key)
+# add afexes from apotheosis and afex dust from grinding down afex items to put afexes of other items
+
+
+#SKILLS AND ABILITIES ==========
+# each skill will have its own skill "line" and every 20 levels youll get a stat increace or ability like from idle wizard's atributes
+# knowalge tree , resipy unlocks , knowlage stat , blueprint finding /buying 
+
+
+#SHOPS AND BUYING STUFF ========
+# make it so you can sell stuff to the shop
 # add a shop that stock will randomize every x amount of turns
 # add item rarity for shop and maybe item drops like enemy or chest or dungoen loot
-# knowalge tree , resipy unlocks , knowlage stat , blueprint finding /buying 
-# add afexes from apotheosis and afex dust from grinding down afex items to put afexes of other items
-# make it so you can sell stuff to the shop
-# make it so you can find crafting matrerials while exploring like wood the the forrest (soon) <============================
-# instead of having a defferent item for each combo of woon and metal and adhesive types make different tiers of each crafting material eg:slime is a tier 1 adhisive 
-# metal tier will affect aromor / damage stat adhisive teir will affect durability and wood wont be used of armor and will affect accuracy
+# buy apples and bread from shop $15 for apple $20 for bread 
 
 
+# QUESTS =======================
+# add town center with a notice board for quests from various nps's with quest difficulties so you dont get quest that are too hard
+# every 5 turn have a chance to add a quest to the quest board
+
+
+#SORT YOUR IDEAS. I did stop yelling
 
 
 #=========================================================================
-#============ REMEMBER pyinstaller --onefile --clean script.py ============
+#============ REMEMBER pyinstaller --onefile --clean main.py =============
 #=========================================================================
 
 
@@ -82,10 +100,9 @@ def game_loop():
     gold_stored = 0
     house_storage_used = 0
     house_storage_max = 0
-    house_upgrades1 = ["house"]
+    house_upgrades1 = ["house"] #un-used but here to show its level 1
     house_upgrades2 = ["porch", "floor_boards"]
     house_upgrades3 = ["second_floor"]
-    house_upgrades_unlocked = ["house"]
     
     #inventory and charm stats
     max_inventory = 5
@@ -169,7 +186,7 @@ def game_loop():
                     "\n while exploring you my find gold but bewhere you may be [red]attacked by enemies![/red]"
                     "\n the enemies you can be attacked by [blue]differ depending on the area[/blue]."
                     "\n sometimes once you explore one area enough you may [blue]find new areas to explore[/blue]"
-                    "\n there are some ares you [blye]can not explore[/blue] however these include the shop the carpenter the blacksmith and your house"
+                    "\n there are some ares you [blue]can not explore[/blue] however, these include the shop the carpenter the blacksmith and your house"
                 )
 
             elif what == "afex" or what == "afexes":
@@ -715,28 +732,56 @@ def game_loop():
                         what = command[1]
                         h_cost = check_house_upgrade(f"{what}", "cost")
                         h_where = check_house_upgrade(f"{what}", "where")
-                        if h_where == "capenter":
-                            if what in house_upgrades_unlocked:
+                        h_need = check_house_upgrade(f"{what}", "need")
+                        if h_need == "double": #DOUBLE MODE BITCHES
+                            h_need1 = check_house_upgrade(f"{what}", "need1")
+                            h_need2 = check_house_upgrade(f"{what}", "need2")
+                            DOUBLE_MODE = "ACTIVATED" #this does noting but it looks cool
+                        if h_where == "carpenter":
+                            if h_need == "double":
+                                if h_need1 in house_upgrades_owned:
+                                    if h_need2 in house_upgrades_owned:
+                                        if gold >= h_cost:
+                                            if what not in house_upgrades_owned:
+                                                house_upgrades_owned += [f"{what}"]
+                                                gold -= h_cost
+                                            else:
+                                                print("you already own that")
+                                        else:
+                                            print("you can not afford that")
+                                    else:
+                                        print(f"you do not have that unlocked, youll need to buy {h_need1} and {h_need2} first")
+                                else:
+                                    print(f"you do not have that unlocked, youll need to buy {h_need1} and {h_need2} first")
+
+                                                            #     /=====================\
+                                                            #    \/                     |
+                            if h_need in house_upgrades_owned or h_need == None: #that should fix it
                                 if gold >= h_cost:
                                     if what not in house_upgrades_owned:
                                         house_upgrades_owned += [f"{what}"]
-                                        to_remove = house_upgrades_unlocked.index(what)
-                                        house_upgrades_unlocked.pop(to_remove)
                                         gold -= h_cost
-                                        if ["house"] not in unlocked_areas:
+                                        if "house" not in unlocked_areas: #dosnt work? fixed it removed the []. nevermind. never-nevermind debug areas adds the ouse to unlocked areas. dumbass
                                             unlocked_areas += ["house"]
-                                            print(f"you have bought a house you have unlocked the 'house' area you can go to it by typing [yellow](goto house)[/yellow]")
+                                            print(f"[blue]you bought a house[/blue] you unlocked the house area you can go to it by typing [yellow](goto house)[/yellow]")
                                             print("while in you house you can use the [yellow]'deposit'[/yellow] and [yellow]'retrive'[/yellow] commands to store and save gold and items on death")
                                     else:
                                         print("you already own that")
                                 else:
                                     print("you can not afford that")
                             else:
-                                print(f"you do not have that unlocked, you can buy these upgrades: {house_upgrades_unlocked}")
+                                print(f"you do not have that unlocked, youll need to buy {h_need} first")
                         else:
                             print("you can not buy that upgrade in the carpenter")
+
+
+                  #  elif current_room == "blacksmith": its 10:00 ill do this later
+
+                        
+
+
                     else:
-                        print("you must be in the shop or carpenter it buy stuff")
+                        print("you must be in a shop to buy stuff")
                 else:
                     print("buy what? you can see whats for sale by typing [yellow]'shophelp'[yellow] [red]SOON TO BE REMOVED[/red]")
             else:
@@ -892,7 +937,6 @@ def game_loop():
                 f"\n [green]house_level:[/green] {house_level},"
                 f"\n [green]house_material:[/green] {house_material},"
                 f"\n [green]house_upgrades_owned:[/green] {house_upgrades_owned},"
-                f"\n [green]house_upgrades_unlocked:[/green] {house_upgrades_unlocked},"
                 f"\n [green]house_storage:[/green] {house_storage},"
                 f"\n [green]house_storage_used:[/green] {house_storage_used},"
                 f"\n [green]house_storage_max:[/green] {house_storage_max},"
@@ -953,7 +997,7 @@ def game_loop():
                         e_xp = check_enemy_stats(f"{caught_by}", "xp")
                         e_accuracy = check_enemy_stats(f"{caught_by}", "accuracy")
                         e_loot_chance = check_enemy_stats(f"{caught_by}", "loot chance")
-                        e_loot = check_enemy_stats(f"{caught_by}", "loot")
+                        e_loot = check_enemy_stats(f"{caught_by}", "loot")  
                         print(f"youve been attacked by a {caught_by}")
                         attacked = True
 
@@ -1107,13 +1151,6 @@ def game_loop():
             
             
         #house upgrade things========================
-        if not house_upgrades_unlocked:
-            house_level + 1
-            if house_level == 1:
-                house_upgrades_unlocked += house_upgrades2
-            if house_level == 2:
-                house_upgrades_unlocked += house_upgrades3
-
 
         if "second_floor" in house_upgrades_owned:
             house_storage_max = 50
@@ -1129,3 +1166,6 @@ def game_loop():
 if __name__ == "__main__":
     show_instructions()
     game_loop() 
+
+
+#WERE AT 1000 LINES HAHAHAHAHHAHAHAHAHAHAHAHHAHAHHAAHHHAHHAHHA

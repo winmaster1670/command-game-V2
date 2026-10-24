@@ -190,6 +190,10 @@
    'D:\\programs and shit\\stuff im still working on atm\\command game '
    'V2\\enemy_stats.py',
    'PYMODULE'),
+  ('events',
+   'D:\\programs and shit\\stuff im still working on atm\\command game '
+   'V2\\events.py',
+   'PYMODULE'),
   ('fnmatch',
    'c:\\Users\\ethan\\AppData\\Roaming\\uv\\python\\cpython-3.15.0-windows-x86_64-none\\Lib\\fnmatch.py',
    'PYMODULE'),

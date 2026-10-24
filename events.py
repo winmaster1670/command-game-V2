@@ -20,6 +20,13 @@ def check_event_stats(looking, stat):
         if stat == "desc":
             return " you were peacfully enjoying the scenery when you hear brushes rustling you draw your weapon then you realise it's just a dumb boar"
 
+    if looking == "birch_wood":
+        if stat == "item":
+            return "birch_wood"
+        if stat == "desc":
+            return "while exploring you find a cool looking stick, maybe you could use this to craft something, sweet! \n [blue]1 birch_wood added to inventory[/blue]"
+
     #SMALL_TOWN=========================
 
-    if looking == ""
+    if looking == "placeholder":
+        pass
