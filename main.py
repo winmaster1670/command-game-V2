@@ -51,8 +51,8 @@ from events import check_event_stats
 def show_instructions():
     print("[cyan]------ Welcome to my Command RPG ------[/cyan]")
     print(
-        "common commands are: [yellow]'explore', 'goto', 'bag', 'stats', 'effects', 'attack', 'run', 'help'[/yellow] and [yellow]'quit'[/yellow]"
-        "\n for a list of all comands type: [yellow]'help commands'[/yellow] for help on a spesific topic type: [yellow]'help (topic)'[/yellow]"
+        "[blue]common commands are:[/blue] [yellow]explore, goto, bag, stats, effects, attack, run, help[/yellow] and [yellow]quit[/yellow]"
+        "\n for a list of [blue]all comands[/blue] type: [yellow]'help commands'[/yellow] for help on a spesific topic type: [yellow]'help (topic)'[/yellow]"
     )
 
 
