@@ -294,12 +294,14 @@ def game_loop():
                         event_chance = random.randint (1, 2) #2 = event, 1 = no event
                         if event_chance == 2:
                             caught = random.randint(1, 2) #1 = attacked, 2 not attacked
+                        else:
+                            caught = 2
                         
                         if caught == 1:
                             attack_turn = "player"
 
                             if current_room == "forrest":
-                                caught_by = random.choice()
+                                caught_by = random.choice(forrest_enemies)
 
                             elif current_room == "small_town" or current_room == "town_center":
                                 caught_by = random.choice(small_town_enemies)
@@ -314,7 +316,7 @@ def game_loop():
                             attacked = True
 
 
-                        elif caught == 2:
+                        elif caught == 2: 
                             if current_room == "forrest":
                                 event = random.choice(forrest_events)
                             if current_room == "small_town":
@@ -329,8 +331,10 @@ def game_loop():
                             else:
                                 if ev_item in inventory:
                                     inventory[f"{ev_item}"] += 1
+                                    inventory_used += 1
                                 else:
                                     inventory[f"{ev_item}"] = 1
+                                    inventory_used += 1
                             
                             print(f"{ev_desc}")
 
