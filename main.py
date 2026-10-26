@@ -167,8 +167,8 @@ def game_loop():
             if what == None:
                 print(
                     " Common commands are: 'explore', 'goto', 'bag', 'stats', 'effects', 'attack', 'run', 'help' and quit"
-                    "\n for a list of all comands type: 'help commands' for help on a spesific topic type: 'help (topic)'"
-                    "\n remember all command and items and everthing is in all lowercase"
+                    "\n for a list of all commands type: 'help commands' for help on a specific topic type: 'help (topic)'"
+                    "\n remember all commands and items and everything is in all lowercase"
                 )
             elif what == "combat" or what == "attacking" or what == "attack" or what == "fight" or what == "fighting":
                 print(
