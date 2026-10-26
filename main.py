@@ -127,7 +127,7 @@ def game_loop():
     forrest_enemies = ("slime", "goblin", "rabbit")
     small_town_enemies = ("bandit", "drunkman", "thief")
 
-    forrest_events = ("bow_string", "apple", "boar")
+    forrest_events = ("bow_string", "apple", "boar", "birch_wood")
     
     temp_count = 0
     temp_count2 = 0
@@ -267,6 +267,8 @@ def game_loop():
                 what = command[2]
                 if what in inventory:
                     i_desc = check_item_stats(f"{what}", "desc")
+                    if i_desc == None:
+                        i_desc = "this item does now have a description yet if you see this post it in issues"
                     print(f"{i_desc}")
                 else:
                     print(f"you do not have {what}")
