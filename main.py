@@ -183,7 +183,8 @@ def game_loop():
             elif what == "explore" or what == "exploring":
                 print(
                     " you can explore many areas in the game the first of which is the forest the one you spawn in."
-                    "\n while exploring you my find gold but bewhere you may be [red]attacked by enemies![/red]"
+                    "\n while exploring you my find gold or even [blue]special events[/blue]"
+                    "\n but bewhere you may be [red]attacked by enemies![/red]"
                     "\n the enemies you can be attacked by [blue]differ depending on the area[/blue]."
                     "\n sometimes once you explore one area enough you may [blue]find new areas to explore[/blue]"
                     "\n there are some ares you [blue]can not explore[/blue] however, these include the shop the carpenter the blacksmith and your house"
@@ -246,11 +247,24 @@ def game_loop():
                     "\n [green]spendpoints:[/green] (allowes you to buy upgrades with your skill points type the upgarde you want to buy for skills you must add the word skill eg: spendpoints damage / spendpoints skill rage [red]SOON TO BE REWORKED[/red])" #rework spendpoints to accomadate unlockable skills and make a different command for skills and stats
                     "\n [green]equip:[/green] (changes your equipted weapon or charms you must type the type of item you're equiping eg: equip weapon sword / equip charm backpack)"
                     "\n [green]buy:[/green] (buys a item from the shop or a house upgrade from the carpenter)"
-                    "\n [green]drop:[/green] (allows you to drop items, this in one of the few command you can use while you have a full inventory, [yellow]but[/yellow] once you drop an item you cannot pick it up it will be [red]permenently deleted[/red])"
+                    "\n [green]drop:[/green] (allows you to drop items, this in one of the few command you can use while you have a full inventory, you can drop multiple of the same item py typing a number after the item [yellow]eg: drop apple 3[/yellow] [red]but[/red] once you drop an item you cannot pick it up it will be [red]permenently deleted[/red])"
                     "\n [green]house:[/green] (displays information about your house and house storage)"
                     "\n [green]deposit:[/green] (deposits items and gold into you house's storage it can only be used while in your house you must type what you are depositing then how much [yellow]eg: deposit item apple 2 / deposit gold 5[/yellow])"
                     "\n [green]retrieve:[/green] (retrieves items or gold from your house's storage it can only be used while in your hosue you must type what your are retrieving then how mcuh [yellow]eg: retrieve item apple 2 / retrieve gold 5[/yellow])"
                     "\n [green]stats:[/green] (displays all of your stats)"
+                )
+
+            elif what == "topics":
+                print(
+                    " here are all of the current topic in the help menu"
+                    "\n combat / attacking / attack / fight / fighting [blue](explains combat damage and accuracy)[/blue]"
+                    "\n explore / exploring [blue](explains exploring finding new areas and events)[/blue]"
+                    "\n afex / afexes [blue](explains what afexes are and how to get them)[/blue]"
+                    "\n anvil / afex anvil [blue](explains both the anvil and)"
+                    "\n grinder"
+                    "\n forge"
+                    "\n commands"
+                    "\n topics"
                 )
 
             else:
@@ -807,14 +821,18 @@ def game_loop():
         elif action == "drop":
             if len(command) > 1:
                 what = command[1]
-                if what in inventory:
-                    inventory[f"{what}"] -= 1
-                    inventory_used -= 1
-                    print(f"you dropped {what}")
+                if len(command)[2]:
+                    amount = command[2]
+                else:
+                    amount = 1
+                if what in inventory >= amount:
+                    inventory[f"{what}"] -= amount
+                    inventory_used -= amount
+                    print(f"you dropped {amount} {what}(s)")
                     if inventory_used <= max_inventory:
                         playable = True
                 else:
-                    print(f"you do not have {what}")
+                    print(f"you do not have enough {what}")
             else:
                 print("drop what")
 
