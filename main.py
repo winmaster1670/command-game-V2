@@ -17,7 +17,7 @@ from events import check_event_stats
 #CRAFTING ======================
 
 # add crafting matierals, can be bought from shops 
-# make it so you can find crafting matrerials while exploring like wood the the forrest (soon) <============================
+# make it so you can find crafting matrerials while exploring like wood the the forest (soon) <============================
 # instead of having a defferent item for each combo of woon and metal and adhesive types make different tiers of each crafting material eg:slime is a tier 1 adhisive  (i dont know how im gonna do this tier thing python dictonaries only allow 1 variable per key)
 # metal tier will affect aromor / damage stat adhisive teir will affect durability and wood wont be used of armor and will affect accuracy                             (i dont know how im gonna do this tier thing python dictonaries only allow 1 variable per key)
 # add afexes from apotheosis and afex dust from grinding down afex items to put afexes of other items
@@ -87,8 +87,8 @@ def game_loop():
     eat_cooldown = 0
     
     #room stats
-    current_room = "forrest"
-    unlocked_areas = ["forrest"]
+    current_room = "forest"
+    unlocked_areas = ["forest"]
     unexplorable_areas = ["shop", "carpenter", "blacksmith", "house"]
     shops_found = False
     
@@ -117,17 +117,17 @@ def game_loop():
     
     #other stats
     attack_turn = "player"
-    times_explored_forrest = 0
+    times_explored_forest = 0
     times_explored_small_town = 0
     playable = True
     effects = {}
     drunk_applied = False
     backpack_applied = False
     
-    forrest_enemies = ("slime", "goblin", "rabbit")
+    forest_enemies = ("slime", "goblin", "rabbit")
     small_town_enemies = ("bandit", "drunkman", "thief")
 
-    forrest_events = ("bow_string", "apple", "boar", "birch_wood")
+    forest_events = ("bow_string", "apple", "boar", "birch_wood")
     
     temp_count = 0
     temp_count2 = 0
@@ -182,7 +182,7 @@ def game_loop():
                 
             elif what == "explore" or what == "exploring":
                 print(
-                    " you can explore many areas in the game the first of which is the forrest the one you spawn in."
+                    " you can explore many areas in the game the first of which is the forest the one you spawn in."
                     "\n while exploring you my find gold but bewhere you may be [red]attacked by enemies![/red]"
                     "\n the enemies you can be attacked by [blue]differ depending on the area[/blue]."
                     "\n sometimes once you explore one area enough you may [blue]find new areas to explore[/blue]"
@@ -236,7 +236,7 @@ def game_loop():
                     "\n [green]bag:[/green] (shows what you have in you inventory you can type bag desc (item name) to see the description of an item)"
                     "\n [green]effects:[/green] (shows the status effects you are under)"
                     "\n [green]explore:[/green] (explores the current area)"
-                    "\n [green]goto:[/green] (moves you to another area type where you want to go [yellow]eg: goto forrest[/yellow])"
+                    "\n [green]goto:[/green] (moves you to another area type where you want to go [yellow]eg: goto forest[/yellow])"
                     "\n [green]attack:[/green] (attacks the enemy you are fighting, [blue]this command is only usable while in combat[/blue])"
                     "\n [green]run:[/green] (runs from the enemy you are fighting, [blue]this command is only usable in combat[/blue])"
                     "\n [green]eat:[/green] (eat / drink a food item type the item you want to eat [yellow]eg: eat apple[/yellow])"
@@ -302,8 +302,8 @@ def game_loop():
                         if caught == 1:
                             attack_turn = "player"
 
-                            if current_room == "forrest":
-                                caught_by = random.choice(forrest_enemies)
+                            if current_room == "forest":
+                                caught_by = random.choice(forest_enemies)
 
                             elif current_room == "small_town" or current_room == "town_center":
                                 caught_by = random.choice(small_town_enemies)
@@ -319,11 +319,11 @@ def game_loop():
 
 
                         elif caught == 2: 
-                            if current_room == "forrest":
-                                event = random.choice(forrest_events)
+                            if current_room == "forest":
+                                event = random.choice(forest_events)
                             if current_room == "small_town":
                             #    event = random.choice(small_town_events) these dont exist yet
-                                event = random.choice(forrest_events)
+                                event = random.choice(forest_events)
 
                             ev_item = check_event_stats(f"{event}", "item")
                             ev_desc = check_event_stats(f"{event}", "desc")
@@ -341,8 +341,8 @@ def game_loop():
                             print(f"{ev_desc}")
 
                         elif event_chance == 1:
-                            if current_room == "forrest":
-                                times_explored_forrest += 1
+                            if current_room == "forest":
+                                times_explored_forest += 1
                                 gold_found = random.randint(1, 4)
                                 
                             if current_room == "small_town" or current_room == "town_center":
@@ -352,7 +352,7 @@ def game_loop():
                             gold += gold_found
                             print(f"you found {gold_found} gold, you now have {gold} gold")
 
-                            if times_explored_forrest >= 10:
+                            if times_explored_forest >= 10:
                                 if attacked == False:
                                     if "small_town" not in unlocked_areas:
                                         unlocked_areas += ["small_town"]
@@ -797,7 +797,7 @@ def game_loop():
             if current_room == "shop":
                 print(f"the following item are for sale: sword, axe, backpack")
             elif current_room == "carpenter":
-                print("the carpenter can build you a house in the forrest and upgrades for the house")
+                print("the carpenter can build you a house in the forest and upgrades for the house")
             else:
                 print("you must be in a shop to use this command")
             
@@ -929,7 +929,7 @@ def game_loop():
                 f"\n [green]attacked:[/green] {attacked},"
                 f"\n [green]unlocked_areas:[/green] {unlocked_areas},"
                 f"\n [green]attack_turn:[/green] {attack_turn},"
-                f"\n [green]times_explored_forrest:[/green] {times_explored_forrest},"
+                f"\n [green]times_explored_forest:[/green] {times_explored_forest},"
                 f"\n [green]times_explored_small_town:[/green] {times_explored_small_town},"
                 f"\n [green]xp:[/green] {xp},"
                 f"\n [green]xp_to_next:[/green] {xp_to_next},"
@@ -996,8 +996,8 @@ def game_loop():
                 elif what == "attack":
                     print(f"DEBUG: you have entered combat")
                     attack_turn = "player"
-                    if current_room == "forrest":
-                        caught_by = random.choice(forrest_enemies)
+                    if current_room == "forest":
+                        caught_by = random.choice(forest_enemies)
                         e_health = check_enemy_stats(f"{caught_by}", "health")
                         e_damage = check_enemy_stats(f"{caught_by}", "damage")
                         e_xp = check_enemy_stats(f"{caught_by}", "xp")
@@ -1049,7 +1049,7 @@ def game_loop():
             if house_level >= 1:
                 current_room = "house"
             else:
-                current_room = "forrest"
+                current_room = "forest"
             print("you have [red]died[/red] you lost you gold and inventory")
             attacked = False
             health = max_health
