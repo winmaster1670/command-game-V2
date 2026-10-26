@@ -260,11 +260,11 @@ def game_loop():
                     "\n combat / attacking / attack / fight / fighting [blue](explains combat damage and accuracy)[/blue]"
                     "\n explore / exploring [blue](explains exploring finding new areas and events)[/blue]"
                     "\n afex / afexes [blue](explains what afexes are and how to get them)[/blue]"
-                    "\n anvil / afex anvil [blue](explains both the anvil and)"
-                    "\n grinder"
-                    "\n forge"
-                    "\n commands"
-                    "\n topics"
+                    "\n anvil / afex anvil [blue](explains with the anvil and applying afexes with the afex anvil)"
+                    "\n grinder [blue](explains the grinder and how to get afex dust using it)"
+                    "\n forge [blue](explains crafting with the forge and how to turn ores into bars)"
+                    "\n commands [blue](show a list of all commands and gives a short description of them)"
+                    "\n topics [blue](shows this topics menu)"
                 )
 
             else:
