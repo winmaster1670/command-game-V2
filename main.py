@@ -318,10 +318,12 @@ def game_loop():
                             attacked = True
 
 
-                        elif caught == 2: 
+                        elif event_chance == 2: 
                             if current_room == "forest":
                                 event = random.choice(forest_events)
+                                times_explored_forest += 1
                             if current_room == "small_town":
+                                times_explored_small_town += 1
                             #    event = random.choice(small_town_events) these dont exist yet
                                 event = random.choice(forest_events)
 
