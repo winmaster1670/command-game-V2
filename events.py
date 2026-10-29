@@ -31,6 +31,8 @@ def check_event_stats(looking, stat):
             return "birch_wood"
         if stat == "desc":
             return " while exploring you find a cool looking stick, maybe you could use this to craft something, sweet! \n [blue]1 birch_wood added to inventory[/blue]"
+        if stat == "rarity":
+            return 3
 
     #SMALL_TOWN=========================
 

@@ -119,7 +119,7 @@ def game_loop():
     attack_turn = "player"
     times_explored_forest = 0
     times_explored_small_town = 0
-    playable = True
+    inventory_full = True
     effects = {}
     drunk_applied = False
     backpack_applied = False
@@ -260,11 +260,11 @@ def game_loop():
                     "\n combat / attacking / attack / fight / fighting [blue](explains combat damage and accuracy)[/blue]"
                     "\n explore / exploring [blue](explains exploring finding new areas and events)[/blue]"
                     "\n afex / afexes [blue](explains what afexes are and how to get them)[/blue]"
-                    "\n anvil / afex anvil [blue](explains with the anvil and applying afexes with the afex anvil)"
-                    "\n grinder [blue](explains the grinder and how to get afex dust using it)"
-                    "\n forge [blue](explains crafting with the forge and how to turn ores into bars)"
-                    "\n commands [blue](show a list of all commands and gives a short description of them)"
-                    "\n topics [blue](shows this topics menu)"
+                    "\n anvil / afex anvil [blue](explains with the anvil and applying afexes with the afex anvil)[/blue]"
+                    "\n grinder [blue](explains the grinder and how to get afex dust using it)[/blue]"
+                    "\n forge [blue](explains crafting with the forge and how to turn ores into bars)[/blue]"
+                    "\n commands [blue](show a list of all commands and gives a short description of them)[/blue]"
+                    "\n topics [blue](shows this topics menu)[/blue]"
                 )
 
             else:
@@ -296,7 +296,7 @@ def game_loop():
             print(f"{effects}")
 
         elif action == "explore":
-            if playable == True:
+            if inventory_full == True:
                 if attacked == False:
                     if explorable == False:
                         print("you can not explore here")
@@ -333,13 +333,24 @@ def game_loop():
 
 
                         elif event_chance == 2: 
+                            rarity = random.choice((1, 2, 3), weights = [3, 2, 1])
+                            print(f"[bright_green]DEBUG:[/bright_green] rarity = {rarity}")
                             if current_room == "forest":
-                                event = random.choice(forest_events)
                                 times_explored_forest += 1
+                                event = random.choice(forest_events)
+                                ev_rarity = check_events_stats(f"{event}", "rarity")
+                                while ev_rarity != rarity:
+                                    event = random.choice(forest_events)
+                                    ev_rarity = check_events_stats(f"{event}", "rarity")
+                                
                             if current_room == "small_town":
                                 times_explored_small_town += 1
-                            #    event = random.choice(small_town_events) these dont exist yet
+                                #event = random.choice(small_town_events) these dont exist yet
                                 event = random.choice(forest_events)
+                                ev_rarity = check_events_stats(f"{event}", "rarity")
+                                while ev_rarity != rarity:
+                                    event = random.choice(forest_events)
+                                    ev_rarity = check_events_stats(f"{event}", "rarity")
 
                             ev_item = check_event_stats(f"{event}", "item")
                             ev_desc = check_event_stats(f"{event}", "desc")
@@ -406,7 +417,7 @@ def game_loop():
                 print("you are unable to make this action it may be because you inventory is exeded its max check previous messeges")
 
         elif action == "goto":
-            if playable == True:
+            if inventory_full == False:
                 if attacked == False:
                     if len(command) >= 2:
                         direction = command[1]
@@ -428,7 +439,7 @@ def game_loop():
     
 
         elif action == "attack":
-            if playable == True:
+            if inventory_full == False:
                 if attacked == True:
                     if attack_turn == "player":
                         what = list(effects.keys())
@@ -507,7 +518,7 @@ def game_loop():
                             inventory_used -= 1
                             eat_cooldown = 2
                             if inventory_used <= max_inventory:
-                                playable = True
+                                inventory_full = True
                             print(
                                 f"you eat an {eat_what}, it heals you for {f_heal}, you now have {health} health"
                             )
@@ -525,7 +536,7 @@ def game_loop():
 
 
         elif action == "skill":
-            if playable == True:
+            if inventory_full == True:
                 if len(command) > 1:
                     what = command[1]
                     if what in skills:
@@ -614,7 +625,7 @@ def game_loop():
             )
 
         elif action == "spendpoints":
-            if playable == True:
+            if inventory_full == True:
                 if points >= 1:
                     if len(command) == 2:
                         what = command[1]
@@ -730,7 +741,7 @@ def game_loop():
 
 
         elif action == "buy":
-            if playable == True:
+            if inventory_full == True:
                 if len(command) > 1:
                     if current_room == "shop":
                         chat = random.randint(1, 3)
@@ -830,7 +841,7 @@ def game_loop():
                     inventory_used -= amount
                     print(f"you dropped {amount} {what}(s)")
                     if inventory_used <= max_inventory:
-                        playable = True
+                        inventory_full = True
                 else:
                     print(f"you do not have enough {what}")
             else:
@@ -1171,7 +1182,7 @@ def game_loop():
             
             
         if inventory_used >= (max_inventory + 1):
-            playable = False
+            inventory_full = False
             print(f"[red]you have exeaded you max inventory of {max_inventory} you must drop somthing[/red]")
             
             
