@@ -736,7 +736,6 @@ def game_loop():
                         if h_need == "double": #DOUBLE MODE BITCHES
                             h_need1 = check_house_upgrade(f"{what}", "need1")
                             h_need2 = check_house_upgrade(f"{what}", "need2")
-                            DOUBLE_MODE = "ACTIVATED" #this does noting but it looks cool
                         if h_where == "carpenter":
                             if h_need == "double":
                                 if h_need1 in house_upgrades_owned:
@@ -761,7 +760,7 @@ def game_loop():
                                     if what not in house_upgrades_owned:
                                         house_upgrades_owned += [f"{what}"]
                                         gold -= h_cost
-                                        if "house" not in unlocked_areas: #dosnt work? fixed it removed the []. nevermind. never-nevermind debug areas adds the ouse to unlocked areas. dumbass
+                                        if "house" not in unlocked_areas: #dosnt work? fixed it removed the []. nevermind. never-nevermind debug areas adds the house to unlocked areas. dumbass
                                             unlocked_areas += ["house"]
                                             print(f"[blue]you bought a house[/blue] you unlocked the house area you can go to it by typing [yellow](goto house)[/yellow]")
                                             print("while in you house you can use the [yellow]'deposit'[/yellow] and [yellow]'retrive'[/yellow] commands to store and save gold and items on death")

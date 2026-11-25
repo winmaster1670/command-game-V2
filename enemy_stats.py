@@ -85,16 +85,3 @@ def check_enemy_stats(looking, stat):
         if stat == "loot":
             return "dagger"
             
-    if looking == "shopkeeper":
-        if stat == "health":
-            return 40
-        if stat == "damage":
-            return 7
-        if stat == "accuracy":
-            return 8
-        if stat == "xp":
-            return 30
-        if stat == "loot chance":
-            return 10
-        if stat == "loot":
-            return "shop key"
